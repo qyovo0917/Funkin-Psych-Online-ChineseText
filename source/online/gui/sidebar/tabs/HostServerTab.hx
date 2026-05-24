@@ -9,7 +9,7 @@ import haxe.io.Error;
 
 class HostServerTab extends TabSprite {
     public function new() {
-        super('Host Server (EXPERIMENTAL)', 'server');
+        super('创建房间 (测试版)', 'server');
 		tabWidth = 600;
     }
 
@@ -42,7 +42,7 @@ class HostServerTab extends TabSprite {
 		super.onShow();
 
 		if (process == null)
-			logs.setText('\nYou can host a server locally with the button here! -->\n\nThe server will not be exposed to the public and will\nonly be visible in your local network.\n\n(If you don\'t have NodeJS installed,\nthe game will install it on your system)');
+			logs.setText('\n你可以点击右侧按钮本地创建房间！\n\n房间不会公开显示，\n只有同一局域网的玩家能看见。\n\n(如果你未安装 NodeJS，\n游戏会自动为你安装)');
 	}
 
     function startAndStopServer() {
@@ -112,7 +112,7 @@ class HostServerTab extends TabSprite {
 			logProcess(installPackages);
         }
 
-		logs.setText('Starting the server...');
+		logs.setText('正在启动服务器...');
 		startAndStop.icon.bitmapData = GAssets.image('sidebar/exit');
 
         Thread.run(() -> {
@@ -145,7 +145,7 @@ class HostServerTab extends TabSprite {
                     });
                 }
                 catch (e:Dynamic) {
-                    trace('cras');
+                    trace('崩溃');
                     if (e == Error.Blocked) {
                         // Blocked will be ignored
                         continue;
@@ -165,7 +165,7 @@ class HostServerTab extends TabSprite {
 			return;
 		}
 
-        trace('killing the server');
+        trace('正在关闭服务器');
 		#if windows
 		var killServer = new sys.io.Process("taskkill /t /f /PID " + process.getPid());
 		#else
@@ -176,9 +176,9 @@ class HostServerTab extends TabSprite {
 		process = null;
 
 		Waiter.putPersist(() -> {
-            Alert.alert('Server Stopped!');
+            Alert.alert('服务器已停止！');
 			var instance:HostServerTab = cast(SideUI.instance.tabs[SideUI.instance.initTabs.indexOf(HostServerTab)]);
-			instance.logs.setText(instance.logs.text + '\n' + 'Server has been stopped!');
+			instance.logs.setText(instance.logs.text + '\n' + '服务器已停止！');
 			if (instance != null && instance.initialized) {
 				instance.startAndStop.icon.bitmapData = GAssets.image('sidebar/start');
 				instance.updateServer.visible = true;
