@@ -61,7 +61,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 
 		items = new FlxTypedSpriteGroup<Option>(40, 40);
 
-		items.add(publicRoom = new Option("Public Room", "If enabled, this room will be publicly listed in the FIND tab.", () -> {
+		items.add(publicRoom = new Option("公开房间", "启用后，房间会在搜索列表中公开显示。", () -> {
 			GameClient.send("togglePrivate");
 		}, (elapsed) -> {
 			publicRoom.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -69,7 +69,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			publicRoom.checked = !GameClient.room.state.isPrivate;
 		}, 0, 0, !GameClient.room.state.isPrivate));
 
-		items.add(networkOnlyRoom = new Option("Only Network Players", "If enabled, only registered players to the network can join.", () -> {
+		items.add(networkOnlyRoom = new Option("仅登录玩家加入", "启用后，只有注册用户可以加入此房间。", () -> {
 			GameClient.send("toggleNetworkOnly");
 		}, (elapsed) -> {
 			networkOnlyRoom.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -77,7 +77,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			networkOnlyRoom.checked = GameClient.room.state.networkOnly;
 		}, 0, 0, GameClient.room.state.networkOnly));
 
-		items.add(anarchyMode = new Option("Anarchy Mode", "This option gives other players host permissions.", () -> {
+		items.add(anarchyMode = new Option("自由选择模式", "启用后，所有玩家都拥有房主权限。", () -> {
 			GameClient.send("anarchyMode");
 		}, (elapsed) -> {
 			anarchyMode.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -85,7 +85,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			anarchyMode.checked = GameClient.room.state.anarchyMode;
 		}, 0, 0, GameClient.room.state.anarchyMode));
 
-		items.add(allPlayersChoose = new Option("Let Players Choose", "This option gives other players permission to pick a song and stage.", () -> {
+		items.add(allPlayersChoose = new Option("让玩家选择", "启用后，所有玩家都可以选择歌曲与场景。", () -> {
 			GameClient.send("togglePlayersCanChoose");
 		}, (elapsed) -> {
 			allPlayersChoose.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -93,7 +93,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			allPlayersChoose.checked = GameClient.room.state.allPlayersChoose;
 			
 		}, 0, 0, GameClient.room.state.allPlayersChoose));
-		items.add(swapSides = new Option("Boyfriend Side", "Play on Boyfriend's side.", () -> {
+		items.add(swapSides = new Option("BF阵营", "切换到BF（玩家）一侧进行游戏。", () -> {
 			GameClient.send("swapSides");
 		}, (elapsed) -> {
 			swapSides.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -101,7 +101,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			swapSides.checked = GameClient.getPlayerSelf().bfSide;
 		}, 0, 0, GameClient.getPlayerSelf().bfSide));
 
-		items.add(teamMode = new Option("Team Mode", "Compete in Teams rather than individually! Your performance will be averaged with your teammate.", () -> {
+		items.add(teamMode = new Option("团队模式", "以团队形式竞技，分数会与队友平均计算。", () -> {
 			GameClient.send("teamMode");
 		}, (elapsed) -> {
 			teamMode.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -109,7 +109,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			teamMode.checked = GameClient.room.state.teamMode;
 		}, 0, 0, GameClient.room.state.teamMode));
 
-		items.add(royalMode = new Option("One Lane Mode", "Everybody plays on the same side!", () -> {
+		items.add(royalMode = new Option("单谱面模式", "所有玩家在同一个谱面上游戏！", () -> {
 			GameClient.send("royalMode");
 		}, (elapsed) -> {
 			royalMode.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -119,7 +119,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			updateItems();
 		}, 0, 0, GameClient.room.state.royalMode));
 		
-		items.add(royalModeDadSide = new Option("One Lane Mode Opponent Side", "Everybody plays on opponent side when enabled.", () -> {
+		items.add(royalModeDadSide = new Option("单谱面-对手阵营", "启用后，所有玩家在对手侧进行游戏。", () -> {
 			GameClient.send("royalModeDadSide");
 		}, (elapsed) -> {
 			royalModeDadSide.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -127,7 +127,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			royalModeDadSide.checked = GameClient.room.state.royalModeDadSide;
 		}, 0, 0, GameClient.room.state.royalModeDadSide));
 		
-		items.add(hideGF = new Option("Hide Girlfriend", "Hides GF from the stage.", () -> {
+		items.add(hideGF = new Option("隐藏GF", "在场景中隐藏GF角色。", () -> {
 			GameClient.send("toggleGF");
 		}, (elapsed) -> {
 			hideGF.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -135,7 +135,7 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			hideGF.checked = GameClient.room.state.hideGF;
 		}, 0, 0, GameClient.room.state.hideGF));
 
-		items.add(disableSkins = new Option("Disable Skins", "Forbids players from using skins.", () -> {
+		items.add(disableSkins = new Option("禁用皮肤", "禁止玩家使用自定义皮肤。", () -> {
 			GameClient.send("toggleSkins");
 		}, (elapsed) -> {
 			disableSkins.alpha = GameClient.hasPerms() ? 1 : 0.8;
@@ -150,29 +150,29 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			if (GameClient.room.state.winCondition != prevCond) {
 				switch (GameClient.room.state.winCondition) {
 					case 0:
-						winCondition.descText.text = 'Side with the highest Accuracy wins!';
+						winCondition.descText.text = '准度最高的一方获胜！';
 					case 1:
-						winCondition.descText.text = 'Side with the highest Score wins!';
+						winCondition.descText.text = '分数最高的一方获胜！';
 					case 2:
-						winCondition.descText.text = 'Side with the least Misses wins!';
+						winCondition.descText.text = '失误最少的一方获胜！';
 					case 3:
-						winCondition.descText.text = 'Side with the most FP wins!';
+						winCondition.descText.text = 'FP最高的一方获胜！';
 					case 4:
-						winCondition.descText.text = 'Side with the highest Combo wins!';
+						winCondition.descText.text = '连击数最高的一方获胜！';
 				}
-				winCondition.descText.text += ' (Click to Change)';
+				winCondition.descText.text += ' (点击切换)';
 				winCondition.box.makeGraphic(Std.int(winCondition.descText.x - winCondition.x + winCondition.descText.width) + 10, Std.int(winCondition.height), 0x81000000);
 			}
 
 			prevCond = GameClient.room.state.winCondition;
 		}, 0, 0, false, true));
 
-		items.add(modifers = new Option("Game Modifiers", "Set your Gameplay Modifiers here!", () -> {
+		items.add(modifers = new Option("游戏修改器", "在这里设置游戏玩法修改器！", () -> {
 			close();
 			FlxG.state.openSubState(new GameplayChangersSubstate());
 		}, null, 0, 0, false, true));
 
-		items.add(stageSelect = new Option("Select Stage", "Currently Selected: " + (GameClient.room.state.stageName == "" ? '(default)' : GameClient.room.state.stageName), () -> {
+		items.add(stageSelect = new Option("选择场景", "当前选择： " + (GameClient.room.state.stageName == "" ? '(默认)' : GameClient.room.state.stageName), () -> {
 			if (GameClient.hasPerms()) {
 				close();
 				FlxG.state.openSubState(new SelectStageSubstate());
@@ -181,16 +181,16 @@ class RoomSettingsSubstate extends MusicBeatSubstate {
 			stageSelect.alpha = GameClient.hasPerms() ? 1 : 0.8;
 		}, 0, 0, false, true));
 
-		items.add(skinSelect = new Option("Select Skin", "Select your Skin here!", () -> {
+		items.add(skinSelect = new Option("选择皮肤", "在这里选择你的自定义皮肤！", () -> {
 			if (!GameClient.room.state.disableSkins) {
 				LoadingState.loadAndSwitchState(new SkinsState());
 			}
 			else {
-				Alert.alert('Skins are disabled!');
+				Alert.alert('皮肤已被禁用！');
 			}
 		}, null, 0, 0, false, true));
 
-		items.add(gameOptions = new Option("Game Options", "Open your Game Options here!", () -> {
+		items.add(gameOptions = new Option("游戏设置", "打开引擎主设置界面！", () -> {
 			LoadingState.loadAndSwitchState(new OptionsState());
 			OptionsState.onPlayState = false;
 			OptionsState.onOnlineRoom = true;
