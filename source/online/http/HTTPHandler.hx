@@ -15,7 +15,7 @@ class HTTPHandler {
 			case Right(v):
 				this.address = HTTPClient.parseStringToAddress(v);
 			case null:
-				throw new Exception('Null Argument');
+				throw new Exception('参数为空');
 		}
 	}
 
