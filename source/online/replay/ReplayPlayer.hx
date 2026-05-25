@@ -34,7 +34,7 @@ class ReplayPlayer extends FlxBasic {
 		Conductor.judgePlaybackRate = data.gameplay_modifiers.get('songspeed');
 
         state.botplayVisibility = true;
-        state.botplayTxt.text = data.player + "'s\nREPLAY";
+        state.botplayTxt.text = data.player + "'s\n回放";
     }
 
     override function destroy() {
@@ -52,18 +52,18 @@ class ReplayPlayer extends FlxBasic {
 			if (state.playbackRate < 0.01) {
 				state.playbackRate = 0.01;
 			}
-			state.botplayTxt.text = data.player + "'s\nREPLAY\n" + '(${CoolUtil.floorDecimal(state.playbackRate, 2)}x)';
+			state.botplayTxt.text = data.player + "'s\n回放\n" + '(${CoolUtil.floorDecimal(state.playbackRate, 2)}x)';
         }
         else if (state.controls.UI_RIGHT) {
 			state.playbackRate += elapsed * 0.25 * shiftMult;
             if (state.playbackRate > 6) {
 				state.playbackRate = 6;
             }
-			state.botplayTxt.text = data.player + "'s\nREPLAY\n" + '(${CoolUtil.floorDecimal(state.playbackRate, 2)}x)';
+			state.botplayTxt.text = data.player + "'s\n回放\n" + '(${CoolUtil.floorDecimal(state.playbackRate, 2)}x)';
         }
         else if (state.controls.RESET) {
 			state.playbackRate = ClientPrefs.getGameplaySetting('songspeed');
-			state.botplayTxt.text = data.player + "'s\nREPLAY\n";
+			state.botplayTxt.text = data.player + "'s\n回放\n";
         }
 
 		for (key => status in pressedKeys) {
