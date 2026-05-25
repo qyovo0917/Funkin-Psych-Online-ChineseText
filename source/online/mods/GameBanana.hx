@@ -114,7 +114,7 @@ class GameBanana {
 				}
 
 				if (arr == null || arr.length < 11) {
-					response(null, new Exception('Faulty Mod Response'));
+					response(null, new Exception('模组响应数据错误'));
 					return;
 				}
 
@@ -185,7 +185,7 @@ class GameBanana {
 
 	public static function downloadMod(mod:GBMod, ?onSuccess:String->Void) {
         if (mod.trashed || mod.withheld) {
-			Alert.alert("Failed to download!", "That mod is deleted!");
+			Alert.alert("下载失败！", "该模组已被删除！");
 			return;
         }
 
@@ -202,8 +202,8 @@ class GameBanana {
         }
 
 		if (daModUrl == null) {
-			Alert.alert("Failed to download!", "Unsupported file archive type!\n(Only ZIP, TAR, TGZ, RAR archives are supported!)");
-			RequestSubstate.requestURL(mod.pageDownload, "The following mod needs to be installed from this source", true);
+			Alert.alert("下载失败！", "不支持的文件格式！\n(仅支持 ZIP、TAR、TGZ、RAR 压缩包！)");
+			RequestSubstate.requestURL(mod.pageDownload, "该模组需要从此来源手动安装", true);
 			return;
 		}
 
