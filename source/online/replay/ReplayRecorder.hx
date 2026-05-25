@@ -73,7 +73,7 @@ class ReplayRecorder extends FlxBasic {
 	public function new(state:PlayState) {
         super();
 
-		trace("Recording a replay...");
+		trace("录制回放中...");
 
         this.state = state;
 
@@ -215,17 +215,17 @@ class ReplayRecorder extends FlxBasic {
 		data.keys = Note.maniaKeys;
 
 		if (data.accuracy < 5) {
-			Alert.alert("git gud", 'your performance was SHIT');
+			Alert.alert("太菜了", '你的表现跟屎一样');
 			return 0;
 		}
 
-		trace("Saving replay...");
+		trace("保存回放中");
 		var replayData = Json.stringify(data);
 		File.saveContent(FileUtils.joinFiles([
 			"replays", 
 			"MyReplay-" + PlayState.SONG.song + "-" + Difficulty.getString().toUpperCase() + "-" + DateTools.format(Date.now(), "%Y-%m-%d_%H'%M'%S") + ".funkinreplay"
 		]), replayData);
-		trace("Saved a replay!");
+		trace("回放已保存！");
 
 		return upload();
     }
@@ -235,7 +235,7 @@ class ReplayRecorder extends FlxBasic {
 			return 0;
 		}
 
-		trace("Uploading replay...");
+		trace("上传回放...");
 
 		var response = null;
 		final MAX_TRIES = 3;
