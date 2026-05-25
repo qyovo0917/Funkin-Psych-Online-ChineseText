@@ -136,7 +136,7 @@ class ChatBox extends FlxTypedSpriteGroup<FlxSprite> {
 		}
 
 		if (invalidCount > 0) {
-			addMessage(警告：你有 ' + invalidCount + ' 个模组没有设置有效的下载链接！', true);
+			addMessage('警告：你有 ' + invalidCount + ' 个模组没有设置有效的下载链接！', true);
 		}
 
 		for (msg in savedMessages) {
