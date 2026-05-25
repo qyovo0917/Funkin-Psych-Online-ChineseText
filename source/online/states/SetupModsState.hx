@@ -75,7 +75,7 @@ class SetupModsState extends MusicBeatState {
 		add(items);
 
 		var title = new FlxText(0, 0, FlxG.width, 
-        "Before you play, it is recommended to set links for your mods!\nSelect mods with ACCEPT, Paste links with CTRL + V, Leave with BACK\nHold SHIFT while exiting to discard all changes"
+        "开始游戏前，建议为你的模组设置下载链接！\n按 ACCEPT 选择模组,使用 CTRL + V 粘贴链接, 按 BACK 离开\n退出时按住 SHIFT 可放弃所有修改"
         );
 		title.setFormat("VCR OSD Mono", 22, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		title.y = 50;
