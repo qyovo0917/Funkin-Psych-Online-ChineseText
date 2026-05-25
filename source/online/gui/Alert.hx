@@ -149,7 +149,7 @@ class Alert extends Sprite {
 	}
 
 	public static function alert(title:String, ?message:String, ?onClick:Void->Void) {
-		if (title.startsWith("RUNNING ON A UNOFFICIAL BUILD"))
+		if (title.startsWith("你正在运行千野年糕ovo的汉化版本"))
 			Main.UNOFFICIAL_BUILD = true;
 
 		if (trashedObjects.length <= 0) {
