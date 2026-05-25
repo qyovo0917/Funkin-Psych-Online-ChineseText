@@ -125,7 +125,7 @@ class Alert extends Sprite {
 
 		instance = this;
 
-		if (Main.LOW_STORAGE) alert(title('你正在运行由千野年糕ovo汉化的版本！！！').toString());
+		if (Main.LOW_STORAGE) alert("你正在运行由千野年糕ovo汉化的版本！！！");
 
 		if (stage != null)
 			init();
