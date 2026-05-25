@@ -82,7 +82,7 @@ class DownloaderState extends MusicBeatState {
 		add(searchBg);
 
 		searchPlaceholder = new FlxText();
-		searchPlaceholder.text = "Search mods here // Enter a URL to download...";
+		searchPlaceholder.text = "禁止下载GameBanana的模组！// 输入链接直接下载...";
 		searchPlaceholder.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		searchPlaceholder.alpha = 0.6;
 		searchPlaceholder.x = searchBg.x + 20;
@@ -107,18 +107,18 @@ class DownloaderState extends MusicBeatState {
 		add(searchInput);
 
 		pageInfo = new FlxText(0, 0, FlxG.width);
-		pageInfo.text = '< Page ${page} >';
+		pageInfo.text = '< 第 ${page} 页 >';
 		pageInfo.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		pageInfo.y = FlxG.height - pageInfo.height - 30;
 		add(pageInfo);
 
-		var pageTip1 = new FlxText(20, 0, FlxG.width, 'Q - Go to previous page');
+		var pageTip1 = new FlxText(20, 0, FlxG.width, 'Q - 上一页');
 		pageTip1.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		pageTip1.y = pageInfo.y;
 		pageTip1.alpha = 0.6;
 		add(pageTip1);
 
-		var pageTip2 = new FlxText(-20, 0, FlxG.width, 'E - Go to next page');
+		var pageTip2 = new FlxText(-20, 0, FlxG.width, 'E - 下一页');
 		pageTip2.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		pageTip2.y = pageInfo.y;
 		pageTip2.alpha = pageTip1.alpha;
@@ -176,15 +176,15 @@ class DownloaderState extends MusicBeatState {
 			return;
 
 		if (mods == null)
-			err = "Mods not found!";
+			err = "未找到模组！";
 
 		if (err != null) {
-			pageInfo.text = "Error: " + err;
+			pageInfo.text = "错误： " + err;
 			return;
 		}
 
 		page = _newPage;
-		pageInfo.text = '< Page ${page} >';
+		pageInfo.text = '< 第 ${page} 页 >';
 
 		loadMods(mods);
 	}
@@ -265,7 +265,7 @@ class DownloaderState extends MusicBeatState {
 							openModDownloads(items.members[curSelected].mod.id);
 						}
 						else if (FlxG.mouse.overlaps(items.members[curSelected].linkBg)) {
-							RequestSubstate.requestURL(items.members[curSelected].mod.url, "The following button redirects to:", true);
+							RequestSubstate.requestURL(items.members[curSelected].mod.url, "该按钮将跳转到：", true);
 						}
 					}
 					else {
@@ -287,12 +287,12 @@ class DownloaderState extends MusicBeatState {
 			LoadingScreen.toggle(false);
 
 			if (err != null) {
-				Alert.alert("Fetching downloads failed!", err);
+				Alert.alert("获取下载链接失败！", err);
 				return;
 			}
 
 			if (downloads._bIsTrashed || downloads._bIsWithheld) {
-				Alert.alert("Fetching downloads failed!", "That mod is deleted!");
+				Alert.alert("获取下载链接失败！", "该模组已被删除！");
 				return;
 			}
 
@@ -353,7 +353,7 @@ class DownloaderState extends MusicBeatState {
 		}
 
 		if (i == 0) {
-			pageInfo.text = "No mods found!";
+			pageInfo.text = "未找到任何模组！";
 		}
 
 		items.screenCenter(X);
