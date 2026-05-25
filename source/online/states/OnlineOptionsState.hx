@@ -44,12 +44,12 @@ class OnlineOptionsState extends MusicBeatState {
 
 		var i = 0;
 
-		var section = new FlxText(0, 0, FlxG.width, "General");
+		var section = new FlxText(0, 0, FlxG.width, "通用设置");
 		section.setFormat("VCR OSD Mono", 25, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(section);
 
 		var nicknameOption:InputOption;
-		items.add(nicknameOption = new InputOption("Nickname", "Set your nickname here!", ["Boyfriend"], (text, _) -> {
+		items.add(nicknameOption = new InputOption("昵称", "在此设置你的游戏昵称！", ["BF"], (text, _) -> {
 			curOption.inputs[0].text = curOption.inputs[0].text.trim().substr(0, 14);
 			ClientPrefs.setNickname(curOption.inputs[0].text);
 			ClientPrefs.saveSettings();
@@ -71,7 +71,7 @@ class OnlineOptionsState extends MusicBeatState {
 		// titleOption.ID = i++;
 
 		var skinsOption:InputOption;
-		items.add(skinsOption = new InputOption("Skin", "Choose your skin here!", null, () -> {
+		items.add(skinsOption = new InputOption("皮肤", "在此选择你的游戏皮肤！", null, () -> {
 			LoadingState.loadAndSwitchState(new SkinsState());
 		}));
 		skinsOption.y = nicknameOption.y + nicknameOption.height + 50;
@@ -79,7 +79,7 @@ class OnlineOptionsState extends MusicBeatState {
 		skinsOption.ID = i++;
 
 		var modsOption:InputOption;
-		items.add(modsOption = new InputOption("Setup Mods", "Set the URL's of your mods here!", null, () -> {
+		items.add(modsOption = new InputOption("模组设置", "在此设置你的模组下载链接！", null, () -> {
 			FlxG.switchState(() -> new SetupModsState(Mods.getModDirectories(), true));
 		}));
 		modsOption.y = skinsOption.y + skinsOption.height + 50;
@@ -115,13 +115,13 @@ class OnlineOptionsState extends MusicBeatState {
 		var serverOption:InputOption;
 		var appendText = "";
 		if (GameClient.serverAddresses.length > 0) {
-			appendText += "\nOfficial Servers:";
+			appendText += "\n国服服务器:";
 			for (address in GameClient.serverAddresses) {
 				if (address != "ws://localhost:2567")
 					appendText += "\n" + address;
 			}
 		}
-		items.add(serverOption = new InputOption("Server Address", "The server that hosts Game Rooms.\nSet to empty if you want to use the default server.\n\nLocal Address: 'localhost'" + appendText, [GameClient.getDefaultServer()], (text, _) -> {
+		items.add(serverOption = new InputOption("服务器地址", "连接游戏房间的服务器。\n留空将使用默认国服服务器。\n\n本地地址： 'localhost'" + appendText, [GameClient.getDefaultServer()], (text, _) -> {
 			curOption.inputs[0].text = prepareAddress(curOption.inputs[0].text);
 			GameClient.serverAddress = curOption.inputs[0].text;
 		}));
@@ -131,7 +131,7 @@ class OnlineOptionsState extends MusicBeatState {
 		serverOption.ID = i++;
 
 		var networkServerOption:InputOption;
-		items.add(networkServerOption = new InputOption("Network Server Address", "The server for Network social features.\nSet to empty if you want to use the default server.\n\nDefault Server: " + GameClient.getDefaultServer()
+		items.add(networkServerOption = new InputOption("社交服务器地址", "用于在线社交功能的服务器。\n留空将使用默认国服服务器。\n\n默认国服服务器：" + GameClient.getDefaultServer()
 		, [GameClient.getDefaultServer()], (text, _) -> {
 			curOption.inputs[0].text = prepareAddress(curOption.inputs[0].text);
 			GameClient.networkServerAddress = curOption.inputs[0].text;
@@ -148,10 +148,10 @@ class OnlineOptionsState extends MusicBeatState {
 		networkServerOption.ID = i++;
 
 		var trustedOption:InputOption;
-		items.add(trustedOption = new InputOption("Clear Trusted Domains", "Clear the list of all trusted domains!", null, () -> {
+		items.add(trustedOption = new InputOption("清空可信域名列表", "清空所有可信域名记录！!", null, () -> {
 			ClientPrefs.data.trustedSources = ["https://gamebanana.com/"];
 			ClientPrefs.saveSettings();
-			Alert.alert("Cleared the trusted domains list!", "");
+			Alert.alert("已清空可信域名列表！", "");
 		}));
 		trustedOption.y = networkServerOption.y + networkServerOption.height + 50;
 		trustedOption.screenCenter(X);
@@ -159,7 +159,7 @@ class OnlineOptionsState extends MusicBeatState {
 
 		var lastOption:InputOption;
 		var recentOption:InputOption;
-		items.add(recentOption = new InputOption("Enable SSL Verification", "If checked, the game will check for valid SSL Certifications, which can lead to safer connections with downloads or rooms.\n(But It's not recommended because of Haxe\'s flawed sockets implementation.)", 
+		items.add(recentOption = new InputOption("启用SSL验证", "启用后游戏会验证SSL证书, 让下载/连接更安全。\n（不推荐开启，因为服务器并不是绝对安全，且因为Haxe的套接字实现存在缺陷）", 
 		ClientPrefs.data.verifySSL,
 		() -> {
 			recentOption.checked = !recentOption.checked;
@@ -172,13 +172,13 @@ class OnlineOptionsState extends MusicBeatState {
 		recentOption.ID = i++;
 
 		if (Auth.authID == null && Auth.authToken == null) {
-			var section = new FlxText(0, recentOption.y + recentOption.height + 50, FlxG.width, "Account");
+			var section = new FlxText(0, recentOption.y + recentOption.height + 50, FlxG.width, "账号");
 			section.setFormat("VCR OSD Mono", 25, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			add(section);
 
 			var registerOption:InputOption;
-			items.add(registerOption = new InputOption("Register to the Network",
-			"Join the Psych Online Network and submit your song replays\nto the leaderboards!" + (Main.UNOFFICIAL_BUILD ? '\n(WARNING: You\'re running on a NOT OFFICIAL build)' : ''), ["Username", "Email"], (text, input) -> {
+			items.add(registerOption = new InputOption("注册账号",
+			"加入在线网络，将你的歌曲回放提交到排行榜！" + (Main.UNOFFICIAL_BUILD ? '\n(您现在游玩的是国服服务器和千野汉化版本！)' : ''), ["用户名", "邮箱"], (text, input) -> {
 				try {
 					if (input == 0) {
 						registerOption.inputs[0].hasFocus = false;
@@ -191,7 +191,7 @@ class OnlineOptionsState extends MusicBeatState {
 					registerOption.inputs[1].text = registerOption.inputs[1].text.trim();
 
 					if (registerOption.inputs[0].text.length <= 0) {
-						Alert.alert('No username set!');
+						Alert.alert('未设置用户名！');
 						return;
 					}
 
@@ -205,14 +205,14 @@ class OnlineOptionsState extends MusicBeatState {
 					if (FunkinNetwork.requestRegister(registerOption.inputs[0].text, registerOption.inputs[1].text)) {
 						openSubState(new VerifyCodeSubstate(code -> {
 							if (FunkinNetwork.requestRegister(registerOption.inputs[0].text, registerOption.inputs[1].text, code)) {
-								Alert.alert("Successfully registered!");
+								Alert.alert("注册成功！");
 								FlxG.resetState();
 							}
 						}));
 					}
 				}
 				catch (exc) {
-					Alert.alert("Couldn't register!", ShitUtil.prettyError(exc));
+					Alert.alert("注册失败！", ShitUtil.prettyError(exc));
 				}
 			}));
 			registerOption.y = section.y + 70;
@@ -223,20 +223,20 @@ class OnlineOptionsState extends MusicBeatState {
 			}
 
 			var loginOption:InputOption;
-			items.add(loginOption = new InputOption("Login to the Network",
-			"Input your email address here and wait for your One-Time Login Code!" + (Main.UNOFFICIAL_BUILD ? '\n(WARNING: You\'re running on a NOT OFFICIAL build)' : ''), ["me@example.org"], (mail, _) -> {
+			items.add(loginOption = new InputOption("登录账号",
+			"输入你的邮箱，等待一次性登录验证码！" + (Main.UNOFFICIAL_BUILD ? '\n(您现在游玩的是国服服务器和千野汉化版本！)' : ''), ["xxxxxxxx@xx.com"], (mail, _) -> {
 				try {
 					if (FunkinNetwork.requestLogin(mail)) {
 						openSubState(new VerifyCodeSubstate(code -> {
 							if (FunkinNetwork.requestLogin(mail, code)) {
-								Alert.alert("Successfully logged in!");
+								Alert.alert("登录成功！");
 								FlxG.resetState();
 							}
 						}));
 					}
 				}
 				catch (exc) {
-					Alert.alert("Couldn't login!", ShitUtil.prettyError(exc));
+					Alert.alert("登录失败！", ShitUtil.prettyError(exc));
 				}
 			}));
 			loginOption.y = registerOption.y + registerOption.height + 50;
@@ -246,8 +246,8 @@ class OnlineOptionsState extends MusicBeatState {
 		else {
 			lastOption = recentOption;
 			var recentOption:InputOption;
-			items.add(recentOption = new InputOption("Network Chat Notifications", 
-			'If checked, all messages from the Network Chat will be notified to you.\nCan be toggled with "/notify" Network command.', 
+			items.add(recentOption = new InputOption("在线聊天通知", 
+			'启用后，你会收到在线聊天的所有消息通知。\n可使用 "/notify" 命令切换开关。', 
 			ClientPrefs.data.notifyOnChatMsg,
 			() -> {
 				recentOption.checked = !recentOption.checked;
@@ -260,8 +260,8 @@ class OnlineOptionsState extends MusicBeatState {
 
 			lastOption = recentOption;
 			var recentOption:InputOption;
-			items.add(recentOption = new InputOption("Mute PM Notifications",
-				'If checked, PM notifications are muted.\nCan be toggled with "/notify pm" Network command.',
+			items.add(recentOption = new InputOption("静音私聊通知",
+				'启用后，将屏蔽私聊消息通知。\n可使用 "/notify pm" 命令切换开关。',
 				ClientPrefs.data.disablePMs, () -> {
 					recentOption.checked = !recentOption.checked;
 					ClientPrefs.data.disablePMs = recentOption.checked;
@@ -273,8 +273,8 @@ class OnlineOptionsState extends MusicBeatState {
 
 			lastOption = recentOption;
 			var recentOption:InputOption;
-			items.add(recentOption = new InputOption("Mute Room Invites",
-				'If checked, room invites are muted.\nCan be toggled with "/notify roominvite" Network command.',
+			items.add(recentOption = new InputOption("屏蔽房间邀请",
+				'启用后，将屏蔽房间邀请通知。\n可使用 "/notify roominvite" 命令切换开关。',
 				ClientPrefs.data.disableRoomInvites, () -> {
 					recentOption.checked = !recentOption.checked;
 					ClientPrefs.data.disableRoomInvites = recentOption.checked;
@@ -286,8 +286,8 @@ class OnlineOptionsState extends MusicBeatState {
 
 			lastOption = recentOption;
 			var recentOption:InputOption;
-			items.add(recentOption = new InputOption("Notify when Friend is Online",
-				'If checked, you\'ll receive a notification when your friend goes online.\nCan be toggled with "/notify friend" Network command.',
+			items.add(recentOption = new InputOption("好友上线通知",
+				'启用后，好友上线时你会收到通知。\n可使用 "/notify friend" 命令切换开关。',
 				ClientPrefs.data.friendOnlineNotification, () -> {
 					recentOption.checked = !recentOption.checked;
 					ClientPrefs.data.friendOnlineNotification = recentOption.checked;
@@ -298,7 +298,7 @@ class OnlineOptionsState extends MusicBeatState {
 			recentOption.ID = i++;
 
 			var sezOption:InputOption;
-			items.add(sezOption = new InputOption("Leave a Global Message", "Leave a message for others to see in the Online Menu!\n(Please keep it English)", ["Message"],
+			items.add(sezOption = new InputOption("发布全局消息", "在在线菜单留下一条让所有人看到的消息！\n（请使用英文）", ["消息内容"],
 				(message, _) -> {
 					if (FunkinNetwork.postFrontMessage(message))
 						FlxG.switchState(() -> new OnlineState());
@@ -308,7 +308,7 @@ class OnlineOptionsState extends MusicBeatState {
 			sezOption.ID = i++;
 
 			var sidebarOption:InputOption;
-			items.add(sidebarOption = new InputOption("Open Sidebar", "Open the Network Sidebar, if you aren't able to.\n(Press " + InputFormatter.getKeyName(cast(ClientPrefs.keyBinds.get('sidebar')[0], FlxKey)) + " to open it at any time!)", null, () -> {
+			items.add(sidebarOption = new InputOption("打开侧边栏, "打开在线功能侧边栏, 如果你无法打开的话。\n(按 " + InputFormatter.getKeyName(cast(ClientPrefs.keyBinds.get('sidebar')[0], FlxKey)) + " 键可随时打开！)", null, () -> {
 				online.gui.sidebar.SideUI.instance.active = true;
 			}));
 			sidebarOption.y = sezOption.y + sezOption.height + 50;
@@ -320,7 +320,7 @@ class OnlineOptionsState extends MusicBeatState {
 			add(section);
 
 			var loginBrowserOption:InputOption;
-			items.add(loginBrowserOption = new InputOption("Login to Browser", "Authenticates you to the network in your default web browser", null, () -> {
+			items.add(loginBrowserOption = new InputOption("浏览器登录", "在默认浏览器中登录在线账号", null, () -> {
 				FlxG.openURL(FunkinNetwork.client.getURL("/api/auth/cookie?id=" + Auth.authID + "&token=" + Auth.authToken));
 			}));
 			loginBrowserOption.y = section.y + 70;
@@ -328,12 +328,12 @@ class OnlineOptionsState extends MusicBeatState {
 			loginBrowserOption.ID = i++;
 
 			var emailOption:InputOption;
-			items.add(emailOption = new InputOption("Change Email Address",
-				"Use the following format:\n<new_mail> from <old_mail>", ["new@example.org from old@example.org"], (mail, _) -> {
+			items.add(emailOption = new InputOption("修改邮箱地址",
+				"请使用以下格式：\n<新邮箱> from <旧邮箱>>", ["新xxxxxxxx@xx.com 和 旧xxxxxxxx@xx.com"], (mail, _) -> {
 					if (FunkinNetwork.setEmail(mail)) {
 						openSubState(new VerifyCodeSubstate(code -> {
 							if (FunkinNetwork.setEmail(mail, code)) {
-								Alert.alert("Email Successfully Added!");
+								Alert.alert("邮箱修改成功！");
 							}
 						}));
 					}
@@ -343,12 +343,12 @@ class OnlineOptionsState extends MusicBeatState {
 			emailOption.ID = i++;
 			
 			var deleteOption:InputOption;
-			items.add(deleteOption = new InputOption("Delete Network Account", "Bye!", null, () -> {
-				RequestSubstate.request('Are you sure you want to delete your account?\n(This action is irreversible!)', '', _ -> {
+			items.add(deleteOption = new InputOption("删除账号", "再见!", null, () -> {
+				RequestSubstate.request('你确定要删除账号吗？\n（此操作不可恢复！）', '', _ -> {
 					if (FunkinNetwork.deleteAccount()) {
 						openSubState(new VerifyCodeSubstate(code -> {
 							if (FunkinNetwork.deleteAccount(code)) {
-								Alert.alert("Account Deleted");
+								Alert.alert("账号已删除");
 							}
 						}));
 					}
@@ -359,8 +359,8 @@ class OnlineOptionsState extends MusicBeatState {
 			deleteOption.ID = i++;
 
 			var logoutOption:InputOption;
-			items.add(logoutOption = new InputOption("Logout of the Network", "Logout of the Psych Online Network", null, () -> {
-				RequestSubstate.request('Are you sure you want to logout?', '', _ -> {
+			items.add(logoutOption = new InputOption("退出账号", "退出当前登录的在线账号", null, () -> {
+				RequestSubstate.request('你确定要退出登录吗？', '', _ -> {
 					FunkinNetwork.logout();
 					FlxG.resetState();
 				}, null, true);
