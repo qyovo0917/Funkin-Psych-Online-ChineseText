@@ -6,7 +6,7 @@ import openfl.filters.BlurFilter;
 import online.network.Leaderboard;
 
 class TopPlayerSubstate extends MusicBeatSubstate {
-	var topShit:Scoreboard = new Scoreboard(FlxG.width - 300, 35, 15, ["PLAYER", "POINTS"]);
+	var topShit:Scoreboard = new Scoreboard(FlxG.width - 300, 35, 15, ["玩家", "FP"]);
 
 	var blurFilter:BlurFilter;
 	var coolCam:FlxCamera;
@@ -60,7 +60,7 @@ class TopPlayerSubstate extends MusicBeatSubstate {
 		categoryTxt.text = '< ${Leaderboard.categoryTitles[curCategory]} >';
 		categoryTxt.screenCenter(X);
 
-		keysTxt.text = '< ${curKeys}k >';
+		keysTxt.text = '< ${curKeys}k 键>';
 		keysTxt.screenCenter(X);
 
 		try {
