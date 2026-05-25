@@ -20,13 +20,13 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 
 		//I'd suggest using "Low Quality" as an example for making your own option since it is the simplest here
 		var option:Option = new Option('Low Quality', //Name
-			'If checked, disables some background details,\ndecreases loading times and improves performance.', //Description
+			'如果勾选，会禁用部分背景细节，减少加载时间并提升性能。', //Description
 			'lowQuality', //Save data variable name
 			'bool'); //Variable type
 		addOption(option);
 
 		var option:Option = new Option('Anti-Aliasing',
-			'If unchecked, disables anti-aliasing, increases performance\nat the cost of sharper visuals.',
+			'如果取消勾选，会关闭抗锯齿，提升性能但画面会更锐利。',
 			'antialiasing',
 			'bool');
 		option.onChange = onChangeAntiAliasing; //Changing onChange is only needed if you want to make a special interaction after it changes the value
@@ -34,7 +34,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		antialiasingOption = optionsArray.length-1;
 
 		var option:Option = new Option('Shaders', //Name
-			"If unchecked, disables shaders.\nIt's used for some visual effects, and also CPU intensive for weaker PCs.", //Description
+			"如果取消勾选，会关闭着色器。用于部分视觉效果，低配设备会占用大量性能。", //Description
 			'shaders',
 			'bool');
 		addOption(option);
@@ -48,7 +48,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		#if !html5 //Apparently other framerates isn't correctly supported on Browser? Probably it has some V-Sync shit enabled by default, idk
 
 		var option:Option = new Option('Framerate',
-			"Pretty self explanatory, isn't it?",
+			"很容易理解，不是吗？",
 			'framerate',
 			'int');
 		addOption(option);
@@ -59,7 +59,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangeFramerate;
 
 		var option:Option = new Option('Max FPS', //Name
-			"If checked, the FPS limit will be set to 1000.\nThis setting makes the input timing more accurate, but in cost of minor graphical issues.", //Description
+			"如果勾选，帧率限制会设为1000。此设置会让输入 timing 更精准，但可能出现轻微画面问题。", //Description
 			'unlockFramerate',
 			'bool');
 		option.onChange = onChangeFramerate;
@@ -67,19 +67,19 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		#end
 
 		var option:Option = new Option('Disable Text Item Icons', //Name
-			"If checked, menu text item icons will not be loaded, greatly decreases loading times.", //Description
+			"如果勾选，菜单文本图标将不会加载，大幅减少加载时间。", //Description
 			'disableFreeplayIcons',
 			'bool');
 		addOption(option);
 
 		var option:Option = new Option('Disable Text Item Alphabet', //Name
-			"If checked, various menu elements will be rendered using the pixel font.", //Description
+			"如果勾选，各类菜单元素将使用像素字体渲染。", //Description
 			'disableFreeplayAlphabet',
 			'bool');
 		addOption(option);
 
 		var option:Option = new Option('Combo Stacking',
-			"If unchecked, Ratings and Combo won't stack, saving on System Memory a little and making them easier to read",
+			"如果取消勾选，判定与连击不会叠加显示，节省少量内存并更易阅读。",
 			'comboStacking',
 			'bool');
 		addOption(option);
