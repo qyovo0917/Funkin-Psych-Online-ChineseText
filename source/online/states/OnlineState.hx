@@ -20,12 +20,12 @@ class OnlineState extends MusicBeatState {
 	var items:FlxTypedSpriteGroup<FlxText>;
 
 	var itms:Array<String> = [
-        "JOIN",
-        "HOST",
-        "FIND",
-		"OPTIONS",
-		"LEADERBOARD",
-		"MOD DOWNLOADER"
+        "加入房间",
+        "创建房间",
+        "查找房间",
+		"联机设置",
+		"在线排行",
+		"模组下载"
     ];
 
 	// var networkPlayer:FlxText;
@@ -79,9 +79,9 @@ class OnlineState extends MusicBeatState {
     }
 
 	function getItemName(item:String) {
-		if (curSelected == 0 && item == "JOIN" && inputWait)
+		if (curSelected == 0 && item == "加入房间" && inputWait)
 		{
-			return "JOIN CODE: " + inputString;
+			return "房间代码: " + inputString;
 		}
 		return item;
 	}
@@ -157,7 +157,7 @@ class OnlineState extends MusicBeatState {
 				text.y += prevText.height * i;
 			}
             text.ID = i;
-			text.setFormat("VCR OSD Mono", 40, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			text.setFormat("VCR OSD Mono", 36, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			text.alpha = inputWait ? 0.5 : 0.8;
 			if (text.ID == curSelected) {
 				text.text = "> " + text.text + " <";
@@ -236,7 +236,7 @@ class OnlineState extends MusicBeatState {
 		playersOnline = new FlxText(0, 100);
 		playersOnline.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		playersOnline.alpha = 0.7;
-		playersOnline.text = "Fetching...";
+		playersOnline.text = "获取中...";
 		playersOnline.screenCenter(X);
 		add(playersOnline);
 
@@ -246,7 +246,7 @@ class OnlineState extends MusicBeatState {
 		availableRooms.screenCenter(X);
 		add(availableRooms);
 
-		var credit = new FlxText(0, 0, 0, 'Psych Online by Snirozu');
+		var credit = new FlxText(0, 0, 0, 'Psych Online 汉化 by 千野年糕ovo');
 		credit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		credit.alpha = 0.3;
 		credit.screenCenter(X);
@@ -298,13 +298,13 @@ class OnlineState extends MusicBeatState {
 			var data = FunkinNetwork.fetchFront();
 			Waiter.put(() -> {
 				if (data == null) {
-					playersOnline.text = "NETWORK OFFLINE";
+					playersOnline.text = "服务器离线";
 					// networkPlayer.visible = false;
 					// networkBg.visible = false;
 				}
 				else {
-					playersOnline.text = 'Players Online: ' + data.online;
-					availableRooms.text = 'Available Rooms: ' + data.rooms;
+					playersOnline.text = '在线玩家: ' + data.online;
+					availableRooms.text = '可用房间: ' + data.rooms;
 					frontMessage.text = data.sez;
 					frontMessage.y = FlxG.height - frontMessage.height - 20;
 				}
@@ -370,21 +370,21 @@ class OnlineState extends MusicBeatState {
 
 			if (controls.ACCEPT || (FlxG.mouse.justPressed && mouseInItems)) {
 				switch (itms[curSelected].toLowerCase()) {
-					case "join":
+					case "加入房间":
 						inputWait = true;
-					case "find":
+					case "查找房间":
 						disableInput = true;
 						// FlxG.openURL(GameClient.serverAddress + "/rooms");
 						FlxG.switchState(() -> new FindRoomState());
-					case "host":
+					case "创建房间":
 						disableInput = true;
 						GameClient.createRoom(GameClient.serverAddress, onRoomJoin);
-					case "options":
+					case "联机设置":
 						disableInput = true;
 						FlxG.switchState(() -> new OnlineOptionsState());
-					case "leaderboard":
+					case "在线排行":
 						openSubState(new TopPlayerSubstate());
-					case "mod downloader":
+					case "模组下载":
 						disableInput = true;
 						FlxG.switchState(() -> new DownloaderState());
 				}
@@ -411,7 +411,7 @@ class OnlineState extends MusicBeatState {
 					discord.animation.play("active");
 					discord.offset.set(2, 2);
 
-					itemDesc.text = "Join Psych Online Discord Server!";
+					itemDesc.text = "加入官方交流群";
 					itemDesc.screenCenter(X);
 
 					if (FlxG.mouse.justPressed) {
@@ -428,7 +428,7 @@ class OnlineState extends MusicBeatState {
 					github.alpha = 1;
 					github.animation.play("active");
 
-					itemDesc.text = "Documentation, FAQ and the Source Code!";
+					itemDesc.text = "查看文档、常见问题与源代码";
 					itemDesc.screenCenter(X);
 
 					if (FlxG.mouse.justPressed) {
@@ -438,7 +438,7 @@ class OnlineState extends MusicBeatState {
 							case 'codeberg':
 								RequestSubstate.requestURL("https://codeberg.org/Snirozu/Funkin-Psych-Online/wiki", true);
 							default:
-								Alert.alert('Offline.');
+								Alert.alert('离线状态');
 						}
 					}
 				}
@@ -452,7 +452,7 @@ class OnlineState extends MusicBeatState {
 						bsky.alpha = 1;
 						bsky.animation.play("active");
 
-						itemDesc.text = "Follow the official Psych Online Bluesky account!";
+						itemDesc.text = "关注官方账号";
 						itemDesc.screenCenter(X);
 
 						if (FlxG.mouse.justPressed) {
@@ -470,7 +470,7 @@ class OnlineState extends MusicBeatState {
 						twitter.animation.play("active");
 						twitter.offset.set(5, 5);
 
-						itemDesc.text = "Follow the official Psych Online Twitter account!";
+						itemDesc.text = "关注官方账号";
 						itemDesc.screenCenter(X);
 
 						if (FlxG.mouse.justPressed) {
@@ -499,17 +499,17 @@ class OnlineState extends MusicBeatState {
 
 		switch (curSelected) {
 			case 0:
-				itemDesc.text = "Join a room using a room code";
+				itemDesc.text = "输入房间代码加入房间";
 			case 1:
-				itemDesc.text = "Creates a room";
+				itemDesc.text = "创建一个新的游戏房间";
 			case 2:
-				itemDesc.text = "Opens a list of all available public rooms";
+				itemDesc.text = "查看所有公开房间列表";
 			case 3:
-				itemDesc.text = "Psych Online options, configure stuff here!";
+				itemDesc.text = "在线功能设置与账号管理";
 			case 4:
-				itemDesc.text = "The Funkin Points Leaderboard!";
+				itemDesc.text = "查看全服玩家分数排行榜";
 			case 5:
-				itemDesc.text = "Download mods from Gamebanana here!";
+				itemDesc.text = "从Psychcn.online的网站获取链接进去下载";
 		}
 		itemDesc.screenCenter(X);
 
@@ -582,7 +582,7 @@ class OnlineState extends MusicBeatState {
 
 		if (inputString.length >= 0) {
 			switch (itms[curSelected].toLowerCase()) {
-				case "join":
+				case "加入房间":
 					disableInput = true;
 					if (daCoomCode.toLowerCase() == "adachi") {
 						FlxG.sound.playMusic(Paths.sound('cabbage'));
