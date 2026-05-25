@@ -80,13 +80,13 @@ class SoFunkinSubstate extends MusicBeatSubstate {
 		searchUnderlay.alpha = 0.6;
 		add(searchUnderlay);
 
-		searchInput = new FlxText(0, 0, "PRESS F TO SEARCH");
+		searchInput = new FlxText(0, 0, "按 F 搜索");
 		searchInput.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 		searchInput.scrollFactor.set();
 		add(searchInput);
 
 		// if (!ClientPrefs.data.disableFreeplayAlphabet)
-		groupTitle = new Alphabet(90, 320, "DEFAULT", true);
+		groupTitle = new Alphabet(90, 320, "默认", true);
 		// else
 		// 	groupTitle = new online.objects.AlphaLikeText(90, 320, "");
 		groupTitle.targetY = -1;
@@ -111,13 +111,13 @@ class SoFunkinSubstate extends MusicBeatSubstate {
 	function set_searchString(v) {
 		if (searchInputWait || v.length > 0) {
 			searchInput.alpha = searchInputWait ? 1.0 : 0.6;
-			searchInput.text = "SEARCH: '" + v + "'";
+			searchInput.text = "搜索： '" + v + "'";
 			reposSearch();
 			return searchString = v;
 		}
 
 		searchInput.alpha = 0.6;
-		searchInput.text = 'PRESS F TO SEARCH';
+		searchInput.text = '按 F 搜索';
 		reposSearch();
 		return searchString = v;
 	}
@@ -178,7 +178,7 @@ class SoFunkinSubstate extends MusicBeatSubstate {
 		if (searchOptions.length == 0 && searchString.length > 0) {
 			searchString = '';
 			search();
-			searchInput.text = "NOT FOUND!";
+			searchInput.text = "未找到！";
 			return;
 		}
 
