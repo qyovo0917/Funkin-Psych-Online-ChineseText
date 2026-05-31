@@ -9,7 +9,7 @@ class GameBanana {
 	public static function searchMods(?search:String, page:Int, ?sortOrder:String = "default", response:(mods:Array<GBSub>, err:Dynamic) -> Void) {
 		Thread.run(() -> {
 			var http = new Http(
-			'https://gamebanana.com/apiv11/Game/8694/Subfeed?_nPage=${page}&_sSort=${sortOrder}&_csvModelInclusions=Mod' + (search != null ? '&_sName=${search.urlEncode()}' : '')
+			'https:///apiv11/Game/8694/Subfeed?_nPage=${page}&_sSort=${sortOrder}&_csvModelInclusions=Mod' + (search != null ? '&_sName=${search.urlEncode()}' : '')
 			);
 
 			http.onData = function(data:String) {
@@ -39,7 +39,7 @@ class GameBanana {
 	public static function listCategory(id:String, page:Int, response:(mods:Array<GBSub>, err:Dynamic) -> Void) {
 		Thread.run(() -> {
 			var http = new Http(
-			'https://gamebanana.com/apiv11/Mod/Index?_nPerpage=15&_aFilters[Generic_Category]=${id}&_nPage=${page}'
+			'https:///apiv11/Mod/Index?_nPerpage=15&_aFilters[Generic_Category]=${id}&_nPage=${page}'
 			);
 
 			http.onData = function(data:String) {
@@ -69,7 +69,7 @@ class GameBanana {
 	public static function listCollection(id:String, page:Int, response:(mods:Array<GBSub>, err:Dynamic) -> Void) {
 		Thread.run(() -> {
 			var http = new Http(
-			'https://gamebanana.com/apiv11/Collection/${id}/Items?_nPage=${page}&_nPerpage=15'
+			'https:///apiv11/Collection/${id}/Items?_nPage=${page}&_nPerpage=15'
 			);
 
 			http.onData = function(data:String) {
@@ -99,7 +99,7 @@ class GameBanana {
 	public static function getMod(id:String, response:(mod:GBMod, err:Dynamic)->Void, ?threaded:Bool = true) {
 		var func = () -> {
 			var http = new Http(
-			"https://api.gamebanana.com/Core/Item/Data?itemtype=Mod&itemid=" + id + 
+			"https://api./Core/Item/Data?itemtype=Mod&itemid=" + id + 
 			"&fields=name,description,Files().aFiles(),Url().sDownloadUrl(),Game().name,Trash().bIsTrashed(),Withhold().bIsWithheld(),RootCategory().name,downloads,likes,screenshots"
 			);
 
@@ -157,7 +157,7 @@ class GameBanana {
 
 	public static function getModDownloads(modID:Float, response:(downloads:DownloadPage, err:Dynamic) -> Void) {
 		Thread.run(() -> {
-			var http = new Http('https://gamebanana.com/apiv11/Mod/$modID/DownloadPage');
+			var http = new Http('https:///apiv11/Mod/$modID/DownloadPage');
 
 			http.onData = function(data:String) {
 				Waiter.put(() -> {
