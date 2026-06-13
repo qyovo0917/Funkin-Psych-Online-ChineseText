@@ -11,8 +11,9 @@ class InputText extends FlxInputText {
         fieldBorderColor = FlxColor.TRANSPARENT;
         caretColor = FlxColor.WHITE;
 
-        // 确保文本框可选择、能接收焦点（兼容旧版 OpenFL）
+        // 恢复控件默认的输入能力，不做额外修改
         textField.selectable = true;
+        textField.editable = true;
         textField.wordWrap = false;
 
         var prevText:String = '';
@@ -34,19 +35,9 @@ class InputText extends FlxInputText {
     override function update(elapsed) {
         super.update(elapsed);
 
-        // 手动设置焦点，让系统输入法能捕获到（兼容旧版）
-        if (hasFocus) {
-            FlxG.stage.focus = textField;
-        } else {
-            if (FlxG.stage.focus == textField) {
-                FlxG.stage.focus = null;
-            }
-        }
-
-        // 失去焦点逻辑
+        // 移除之前的 FlxG.stage.focus 手动设置，避免干扰默认焦点逻辑
         if (hasFocus && (FlxG.keys.justPressed.ESCAPE || (FlxG.mouse.justPressed && !FlxG.mouse.overlaps(this)))) {
             hasFocus = false;
-            FlxG.stage.focus = null;
         }
     }
 }
