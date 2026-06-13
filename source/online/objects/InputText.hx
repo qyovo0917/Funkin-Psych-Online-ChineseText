@@ -2,27 +2,23 @@ package online.objects;
 
 import online.gui.sidebar.SideUI;
 import flixel.addons.ui.FlxInputText;
-// 新增导入：IME相关类
-import openfl.text.IME;
-import openfl.text.IMEMode;
 
 class InputText extends FlxInputText {
     public function new(x:Float, y:Float, width:Float, onEnter:(text:String)->Void) {
         super(x, y, Std.int(width));
 
-		backgroundColor = FlxColor.TRANSPARENT;
-		fieldBorderColor = FlxColor.TRANSPARENT;
-		caretColor = FlxColor.WHITE;
+        backgroundColor = FlxColor.TRANSPARENT;
+        fieldBorderColor = FlxColor.TRANSPARENT;
+        caretColor = FlxColor.WHITE;
 
-        // ========== 开启系统中文输入法 IME ==========
-        #if desktop
-        textField.imeEnabled = true;
-        textField.imeMode = IMEMode.DEFAULT;
-        #end
+        // 旧版兼容：确保文本框可选择、能接收焦点
+        textField.selectable = true;
+        textField.autoSize = false;
+        textField.wordWrap = false;
 
         var prevText:String = '';
-		callback = (text, action) -> {
-			if (SideUI.instance != null && SideUI.instance.active) {
+        callback = (text, action) -> {
+            if (SideUI.instance != null && SideUI.instance.active) {
                 this.text = prevText;
                 return;
             }
@@ -30,8 +26,8 @@ class InputText extends FlxInputText {
             prevText = text;
 
             if (action == FlxInputText.ENTER_ACTION) {
-				hasFocus = false; //allow event to overwrite it
-				onEnter(text);
+                hasFocus = false;
+                onEnter(text);
             }
         };
     }
@@ -39,17 +35,20 @@ class InputText extends FlxInputText {
     override function update(elapsed) {
         super.update(elapsed);
 
-        // 焦点切换时 开关输入法候选框
-        #if desktop
+        // 旧版兼容：手动设置焦点，让系统输入法能捕获到
         if (hasFocus) {
-            IME.setCompositionEnabled(true);
+            FlxG.stage.focus = textField;
         } else {
-            IME.setCompositionEnabled(false);
+            // 失去焦点时清空，避免残留
+            if (FlxG.stage.focus == textField) {
+                FlxG.stage.focus = null;
+            }
         }
-        #end
 
-		if (hasFocus && (FlxG.keys.justPressed.ESCAPE || (FlxG.mouse.justPressed && !FlxG.mouse.overlaps(this)))) {
+        // 失去焦点的逻辑
+        if (hasFocus && (FlxG.keys.justPressed.ESCAPE || (FlxG.mouse.justPressed && !FlxG.mouse.overlaps(this)))) {
             hasFocus = false;
+            FlxG.stage.focus = null;
         }
     }
 }
