@@ -3,7 +3,6 @@ name: Build
 on:
   push:
     branches: [ main, experimental ]
-    tags: [ "*" ]
   pull_request:
     branches: [ main, experimental ]
   workflow_dispatch:
@@ -26,9 +25,9 @@ jobs:
             export/release/linux/haxe
             export/release/linux/obj
             export/release/linux/cpp
-          key: linux-${{ hashFiles('haxelib.json', 'Project.xml') }}-${{ github.sha }}
+          key: linux-${{ hashFiles('haxelib.json', 'Project.xml', 'hmm.json') }}-${{ github.sha }}
           restore-keys: |
-            linux-${{ hashFiles('haxelib.json', 'Project.xml') }}-
+            linux-${{ hashFiles('haxelib.json', 'Project.xml', 'hmm.json') }}-
 
       - name: Install Dependencies
         run: |
@@ -66,9 +65,9 @@ jobs:
             export/release/windows/haxe
             export/release/windows/obj
             export/release/windows/cpp
-          key: win-${{ hashFiles('haxelib.json', 'Project.xml') }}-${{ github.sha }}
+          key: win-${{ hashFiles('haxelib.json', 'Project.xml', 'hmm.json') }}-${{ github.sha }}
           restore-keys: |
-            win-${{ hashFiles('haxelib.json', 'Project.xml') }}-
+            win-${{ hashFiles('haxelib.json', 'Project.xml', 'hmm.json') }}-
 
       - name: Install Dependencies
         run: |
@@ -106,9 +105,9 @@ jobs:
             export/release/macos/haxe
             export/release/macos/obj
             export/release/macos/cpp
-          key: mac-${{ hashFiles('haxelib.json', 'Project.xml') }}-${{ github.sha }}
+          key: mac-${{ hashFiles('haxelib.json', 'Project.xml', 'hmm.json') }}-${{ github.sha }}
           restore-keys: |
-            mac-${{ hashFiles('haxelib.json', 'Project.xml') }}-
+            mac-${{ hashFiles('haxelib.json', 'Project.xml', 'hmm.json') }}-
 
       - name: Install Dependencies
         run: |
