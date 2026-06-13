@@ -30,6 +30,9 @@
 	<define name="TITLE_SCREEN_EASTER_EGG" /> <!-- DELETE THE if="officialBuild" for enabling this on an unofficial build -->
 	<define name="RAR_SUPPORTED" if="windows" unless="hl" />
 
+	<!-- 开启原生文本输入，支持系统中文输入法 -->
+	<haxedef name="openfl.text.ALLOW_NATIVE_INPUT" />
+
 	<!-- ____________________________ Window Settings ___________________________ -->
 
 	<!--These window settings apply to all targets-->
@@ -38,8 +41,8 @@
 	<!--HTML5-specific-->
 	<window if="html5" resizable="true" />
 
-	<!--Desktop-specific-->
-	<window if="desktop" orientation="landscape" fullscreen="ture" resizable="true" vsync="false" />
+	<!--Desktop-specific：关闭全屏，防止拦截输入法，保留窗口化+可缩放-->
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false" />
 
 	<!--Mobile-specific-->
 	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0"
@@ -101,6 +104,10 @@
 	</section>
 
 	<!-- _______________________________ Libraries ______________________________ -->
+
+	<!-- 锁定版本：Lime 8.4.0 + OpenFL 10.1.0 （支持IME输入法） -->
+	<haxelib name="lime" version="8.4.0" />
+	<haxelib name="openfl" version="10.1.0" />
 
 	<haxelib name="flixel" />
 	<haxelib name="flixel-ui" />
