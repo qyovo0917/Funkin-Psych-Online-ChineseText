@@ -8,12 +8,12 @@
     {
       "name": "lime",
       "type": "haxelib",
-      "version": "8.3.0"
+      "version": "8.1.3"
     },
     {
       "name": "openfl",
       "type": "haxelib",
-      "version": "9.3.0"
+      "version": "9.3.3"
     },
     {
       "name": "flixel",
@@ -116,7 +116,7 @@
     {
       "name": "lumod",
       "type": "haxelib",
-      "version": "2.1.0"
+      "version": "2.2.0"
     },
     {
       "name": "actuate",
