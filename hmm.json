@@ -7,7 +7,7 @@
     },
     {
       "name": "lime",
-      "type": "haxelib",
+      "type": "git",
       "dir": null,
       "ref": "master",
       "url": "https://github.com/qyovo438/lime"
