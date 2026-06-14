@@ -6,6 +6,11 @@
       "version": "2.6.0"
     },
     {
+      "name": "format",
+      "type": "haxelib",
+      "version": "3.8.0"
+    },
+    {
       "name": "lime",
       "type": "git",
       "dir": null,
