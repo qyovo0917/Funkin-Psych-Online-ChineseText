@@ -135,15 +135,6 @@ jobs:
             !export/release/macos/bin/**
           key: ${{ runner.os }}-build-cache
 
-      # 手动克隆 lime 仓库（解决 hmm 的 git clone bug 和 LFS 问题）
-      - name: Checkout lime repository
-        uses: actions/checkout@v3
-        with:
-          repository: qyovo438/lime
-          ref: master
-          path: lime_repo
-          lfs: true
-
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
