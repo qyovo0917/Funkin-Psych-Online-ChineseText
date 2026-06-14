@@ -26,8 +26,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        with:
-          lfs: true
 
       - uses: krdlab/setup-haxe@master
         with:
@@ -51,7 +49,6 @@ jobs:
           haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
           haxelib run hmm install
-          haxelib set lime git
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
@@ -61,15 +58,12 @@ jobs:
         with:
           name: linuxBuild
           path: 'export/release/linux/bin'
-          
   buildWindows:
     runs-on: windows-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2.3.0
-        with:
-          lfs: true
 
       - uses: krdlab/setup-haxe@master
         with:
@@ -84,25 +78,14 @@ jobs:
             !export/release/windows/bin/**
           key: ${{ runner.os }}-build-cache
 
-      # 手动克隆 lime 仓库（解决 hmm 的 git clone bug 和 LFS 问题）
-      - name: Checkout lime repository
-        uses: actions/checkout@v3
-        with:
-          repository: qyovo438/lime
-          ref: master
-          path: lime_repo
-          lfs: true
-
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
-          haxelib install hxcpp > nul 2>&1
+          haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
-          haxelib dev lime lime_repo
           haxelib run hmm install
         shell: cmd
-        
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
@@ -112,15 +95,12 @@ jobs:
         with:
           name: windowsBuild
           path: export/release/windows/bin
-          
   buildMac:
     runs-on: macos-14
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        with:
-          lfs: true
 
       - uses: krdlab/setup-haxe@master
         with:
@@ -141,7 +121,6 @@ jobs:
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
-          haxelib dev lime lime_repo
           haxelib run hmm install
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
@@ -152,7 +131,6 @@ jobs:
         with:
           name: macBuild
           path: export/release/macos/bin
-          
   # buildAndroid:
   #   # The type of runner that the job will run on
   #   runs-on: ubuntu-latest
