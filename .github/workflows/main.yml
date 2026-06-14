@@ -42,15 +42,6 @@ jobs:
             !export/release/linux/bin/**
           key: ${{ runner.os }}-build-cache
 
-      # 手动克隆 lime 仓库（解决 hmm 的 git clone bug 和 LFS 问题）
-      - name: Checkout lime repository
-        uses: actions/checkout@v3
-        with:
-          repository: qyovo438/lime
-          ref: master
-          path: lime_repo
-          lfs: true
-
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
@@ -59,10 +50,8 @@ jobs:
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
           haxelib install hmm --quiet
-          # 使用本地克隆的 lime 仓库
-          haxelib dev lime lime_repo
-          # 运行 hmm install（跳过 lime，因为已经安装了）
           haxelib run hmm install
+          haxelib set lime git
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
       - name: Compile
